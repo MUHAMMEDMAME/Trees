@@ -1,46 +1,54 @@
 #pragma once
 #ifndef Queue_h
 #define Queue_h
-struct Node {
+class Node {
+public:
 	Node* lchild;
 	int data;
 	Node* rchild;
 };
 
-struct Queue {
+class Queue {
+private:
 	int size;
 	int front;
-	int Rear;
-	Node ** Q;
+	int rear;
+	Node** Q;
+public:
+	Queue(int size);
+	void enqueue(Node* x);
+	Node* dequeue();
+	bool isEmpty();
 };
-void create(Queue* q, int size) {
-	q->size = size;
-	q->front = q->Rear = -1;
-	q->Q = (Node**)malloc(sizeof(Node *)* q->size);
+Queue::Queue(int size) {
+	this->size = size;
+	front = rear = -1;
+	Q = new Node * [sizeof(size)];
 }
-void enqueue(Queue* q, Node *x) {
-	if (q->Rear == q->size - 1)
-		printf("queue is full\n");
+void Queue::enqueue(Node* x) {
+	if (rear == size)
+		printf("Queue is full\n");
 	else
 	{
-		q->Rear++;
-		q->Q[q->Rear] = x;
+		rear++;
+		Q[rear] = x;
 
 	}
-
 }
-Node * dequeue(Queue* q) {
-	Node * x = NULL;
-	if (q->Rear==q->front)
+Node* Queue::dequeue() {
+	Node* x = NULL;
+	if (rear == front)
 		return x;
-	else {
-		q->front++; 
-		x = q->Q[q->front];
+	else
+	{
+		front++;
+		x = Q[front];
 	}
+
 	return x;
 }
-bool isEmpty(Queue q){
-	return q.Rear==q.front;
+bool Queue::isEmpty() {
+	return front == rear;
 }
 
 #endif // !Queue_h
